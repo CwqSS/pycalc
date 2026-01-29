@@ -114,6 +114,8 @@ class FakeParser:
         for item in lists:
             index = self.find_in_list(expression, item)
             if(index != -1):
+                if expression[index] == "-" and (index == 0 or expression[index - 1] == "(" or expression[index-1] == "^" or expression[index-1] == "*"):
+                    continue
                 return index
         return -1
     

@@ -9,6 +9,8 @@ class Scanner:
         index = 0
         length = len(char_expression)
 
+        new_expression = char_expression
+
         print("Expression: ", char_expression)
         print("length: ", length)
 
@@ -16,10 +18,15 @@ class Scanner:
             text = char_expression[index]
 
             if text == "(" or text == ")":
+                if (index != 0 and text == "(" and char_expression[index - 1].isnumeric()) or (index != length - 1 and text == ")" and char_expression[index + 1].isnumeric()):
+                    raise Exception("Deve haver um operador entre parentêses e um número fora dele.")
+
                 self.stack.push(text)
                 index += 1 
             elif self.isAnOperator(text):
-                if(self.isAnOperator(char_expression[index + 1])):
+                if text == "*" and char_expression[index + 1] == "-":
+                    pass
+                elif(self.isAnOperator(char_expression[index + 1])):
                     raise Exception("Erro: operador demais")
                 index += 1
                 continue
