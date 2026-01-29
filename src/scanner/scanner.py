@@ -16,7 +16,6 @@ class Scanner:
             text = char_expression[index]
 
             if text == "(" or text == ")":
-                print(text)
                 self.stack.push(text)
                 index += 1 
             elif self.isAnOperator(text):
@@ -28,10 +27,12 @@ class Scanner:
                 index += 1
                 while (index < length) and (char_expression[index].isnumeric() or char_expression[index] == "."):
                     text += char_expression[index]
-                    print(text)
                     index += 1
             else:
                 raise Exception("Caracter não aceito: ", text)
+
+        if(not self.stack.isEmpty()):
+            raise Exception("Má formatação de parentêses.")
 
         return True
 

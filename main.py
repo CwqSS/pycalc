@@ -1,16 +1,13 @@
 from src.scanner.Scanner import Scanner
-from src.parser.Parser import Parser
+from src.parser.FakeParser import FakeParser
 
 scanner = Scanner()
-expression = "9 / 0".replace(" ", "")
+expression = "3 ^ 2 ^ 2".replace(" ", "")
 
 scanner.scan(expression)
 
-Tree = Parser().parse2(expression)
+Tree = FakeParser().parse(expression)
 
-print("Expressão: ", end="")
-Tree.display()
-print("")
 print("Resultado: ", Tree.calculate())
 
 

@@ -24,4 +24,8 @@ class DivisionStrategy(OperatorStrategy):
             raise Exception("Não é possível dividir por 0")
 
         return node.left.calculate() / node.right.calculate()
+    
+class ExponentiationStrategy(OperatorStrategy):
+    def execute(self, node: ExpressionNode):
+        return node.left.calculate() ** node.right.calculate()
 

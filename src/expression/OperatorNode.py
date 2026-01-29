@@ -6,7 +6,7 @@ class OperatorNode(ExpressionNode):
     def __init__(self, operator):
         super().__init__(operator)
         if(operator not in OPERATORS):
-            raise Exception("Operador não suportado")
+            raise Exception("Operador não suportado:", operator)
         self.strategy = OPERATORS.get(operator)
     
     def calculate(self):
