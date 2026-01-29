@@ -5,7 +5,7 @@ class Scanner:
     def __init__(self):
         self.stack = PStack()
 
-    def scan(self, char_expression: str) -> list[str]:
+    def scan(self, char_expression: str) -> bool:
         index = 0
         length = len(char_expression)
 
