@@ -1,0 +1,16 @@
+import src.expression.strategys.OperatorStrategy as strategy
+
+ADDITION_OPERATOR = "+"
+SUBTRACTION_OPERATOR = "-"
+DIVISION_OPERATOR = "/"
+MULTIPLICATION_OPERATOR = "*"
+
+OPERATORS = {
+    ADDITION_OPERATOR : strategy.AdditionStrategy(),
+    SUBTRACTION_OPERATOR : strategy.SubtractionStrategy(),
+    DIVISION_OPERATOR : strategy.DivisionStrategy(),
+    MULTIPLICATION_OPERATOR : strategy.MultiplicationStrategy()
+}
+
+LOWEST_PRIORITY_OPERATORS = [ADDITION_OPERATOR, SUBTRACTION_OPERATOR]
+HIGHEST_PRIORITY_OPERATORS = [MULTIPLICATION_OPERATOR, DIVISION_OPERATOR]
