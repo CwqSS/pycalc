@@ -81,6 +81,7 @@ class MainWindow(QMainWindow):
 
   def create_main_label(self) -> QLabel:
     self.label = QLabel()
+    self.errorLabel = QLabel()
     self.label.setText("0")
     font = self.label.font()
     font.setPointSize(25)
@@ -97,8 +98,17 @@ class MainWindow(QMainWindow):
     self.small_label.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignTop)
     self.small_label.setWordWrap(True)
 
+    errorfont = self.errorLabel.font()
+    errorfont.setPointSize(12)
+    self.errorLabel.setFont(errorfont)
+    self.errorLabel.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+    self.errorLabel.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignTop)
+    self.errorLabel.setWordWrap(True)
+
+
     layout = QVBoxLayout()
     layout.addWidget(self.small_label)
+    layout.addWidget(self.errorLabel)
     layout.addWidget(self.label)
 
     return layout
@@ -117,6 +127,7 @@ class MainWindow(QMainWindow):
 
     if btn_txt in numbers:  
       if btn_txt != ',' and txt == '0': return btn_txt # substitui o primeiro 0
+      if len(txt) == 0: return btn_txt
       if txt[-1] in operators: return txt + ' ' + btn_txt
       return txt + btn_txt # add oq passar
     
@@ -140,13 +151,16 @@ class MainWindow(QMainWindow):
       return "0"
     
     if btn_txt == '=':
-      calc = Scanner()
-      formatted_text = txt.replace(' ', '')
-      isOk = calc.scan(formatted_text)
-      if isOk:
-        parser = FakeParser()
-        return str(parser.parse(formatted_text).calculate())
-
+      try:
+          self.errorLabel.setText("")
+          calc = Scanner()
+          formatted_text = txt.replace(' ', '')
+          isOk = calc.scan(formatted_text)
+          if isOk:
+            parser = FakeParser()
+            return str(parser.parse(formatted_text).calculate())
+      except Exception as e:
+          self.errorLabel.setText(str(e))
     print("fora...")
     return txt + btn_txt
 
