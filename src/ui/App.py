@@ -140,6 +140,7 @@ class MainWindow(QMainWindow):
       return txt + btn_txt
     
     if btn_txt in operators:
+      if txt[-1] == "/" or txt[-1] == '*' and btn_txt == '-': return txt + " " + btn_txt
       if txt.endswith(',') or len(txt) == 0: return txt + '0 ' + btn_txt
       if txt[-1] in operators: return txt[0:-1] + btn_txt
       return txt + " " + btn_txt
@@ -155,12 +156,16 @@ class MainWindow(QMainWindow):
           self.errorLabel.setText("")
           calc = Scanner()
           formatted_text = txt.replace(' ', '')
-          isOk = calc.scan(formatted_text)
+          try: 
+            isOk = calc.scan(formatted_text.replace(",", "."))
+          except Exception as e:
+            raise Exception("conta mal escrita")
           if isOk:
             parser = FakeParser()
-            return str(parser.parse(formatted_text).calculate())
+            return str(parser.parse(formatted_text.replace(",", ".")).calculate()).replace(".", ",")
       except Exception as e:
           self.errorLabel.setText(str(e))
+          return txt
     print("fora...")
     return txt + btn_txt
 
